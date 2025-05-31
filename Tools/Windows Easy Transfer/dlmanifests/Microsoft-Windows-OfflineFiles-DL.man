@@ -1,0 +1,117 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+
+<!-- This manifest is installed on the final system and used by migration wizard --><assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="sriramsr"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2005-08-15T20:18:02.2794670-07:00"
+    description="$(resourceString.description)"
+    displayName="$(resourceString.displayName)"
+    lastUpdateTimeStamp="2005-08-15T20:18:02.2794670-07:00"
+    manifestVersion="1.0"
+    owners="sriramsr"
+    supportInformation=""
+    testers="sebcha;jwelle;sanyals"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="$(build.buildType)"
+      language="*"
+      name="Microsoft-Windows-OfflineFiles-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      type=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration
+      xmlns=""
+      scope="Upgrade,MigWiz,USMT"
+      >
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.DoesOSMatch("NT","5.0.*")</condition>
+          <condition>MigXmlHelper.DoesOSMatch("NT","5.1.*")</condition>
+          <condition>MigXmlHelper.DoesOSMatch("NT","5.2.*")</condition>
+        </detect>
+      </detects>
+      <!-- System Preference -->
+      <rules context="System">
+        <rules>
+          <include>
+            <objectSet>
+              <!-- AssignedOfflineFolders is a key -->
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\NetCache\AssignedOfflineFolders\* [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\NetCache [EncryptCache]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\NetCache [LinkTargetCaching]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\NetCache [PurgeNonPrimaryUserFilesAtLogoff]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\NetCache [AlwaysPinSubFolders]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </rules>
+      <!--  Need to map SlowlinkSpeed  -->
+      <!-- User Preferenece -->
+      <rules context="User">
+        <include>
+          <objectSet>
+            <!-- AssignedOfflineFolders is a key -->
+            <pattern type="Registry">HKCU\Software\Microsoft\Windows\CurrentVersion\NetCache\AssignedOfflineFolders\* [*]</pattern>
+            <!-- Shares is a key -->
+            <pattern type="Registry">HKCU\Software\Microsoft\Windows\CurrentVersion\NetCache\Shares\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Windows\CurrentVersion\NetCache [LinkTargetCaching]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <!-- In place upgrade only part -->
+    <machineSpecific>
+      <migXml>
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.DoesOSMatch("NT","5.0.*")</condition>
+            <condition>MigXmlHelper.DoesOSMatch("NT","5.1.*")</condition>
+            <condition>MigXmlHelper.DoesOSMatch("NT","5.2.*")</condition>
+          </detect>
+        </detects>
+        <rules context="System">
+          <rules>
+            <!-- If CSC is enabled in down then create start registry value for service and driver and gather that -->
+            <conditions>
+              <condition>MigXmlHelper.DoesStringContentEqual("Registry","HKLM\Software\Microsoft\Windows\CurrentVersion\NetCache[Enabled]","0x00000001")</condition>
+            </conditions>
+            <addObjects>
+              <object>
+                <location type="Registry">HKLM\System\CurrentControlSet\Services\CSC [Start]</location>
+                <attributes>DWORD</attributes>
+                <bytes>01000000</bytes>
+              </object>
+              <object>
+                <location type="Registry">HKLM\System\CurrentControlSet\Services\CSCService [Start]</location>
+                <attributes>DWORD</attributes>
+                <bytes>02000000</bytes>
+              </object>
+            </addObjects>
+            <include>
+              <objectSet>
+                <pattern type="Registry">HKLM\System\CurrentControlSet\Services\CSC [Start]</pattern>
+                <pattern type="Registry">HKLM\System\CurrentControlSet\Services\CSCService [Start]</pattern>
+              </objectSet>
+            </include>
+          </rules>
+        </rules>
+      </migXml>
+    </machineSpecific>
+    <plugin
+        xmlns="urn:schemas-microsoft-com:asm.v3"
+        classId="{0db12ccb-7cfd-46b6-b4d1-daa6ff0fbcf7}"
+        file="Microsoft-Windows-OfflineFiles-DL\CscMigDl.dll"
+        />
+    <migrationDisplayID>Network_and_Internet\Offline_Files</migrationDisplayID>
+  </migration>
+</assembly>

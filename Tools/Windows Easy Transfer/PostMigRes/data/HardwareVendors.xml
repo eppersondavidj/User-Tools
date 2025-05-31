@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<patterns>
+    <include logic="OR">
+        <match pattern="HP" />
+        <match pattern="Dell" />
+        <match pattern="Fujitsu" />
+        <match pattern="NEC" />
+        <match pattern="Samsung" />
+        <match pattern="Positivo" />
+        <match pattern="HCL" />
+        <match pattern="Hitachi" />
+        <match pattern="Intel" />
+        <match pattern="Compaq" />
+        <match pattern="Acer" />
+        <match pattern="ASUS" />
+        <match pattern="Packard Bell" />
+        <match pattern="LG Electronics" />
+        <match pattern="Haier" />
+        <match pattern="Olidata" />
+        <match pattern="NVidia" />
+        <match pattern="Hewlett Packard" />
+        <match pattern="Sony" />
+        <match pattern="Founder" />
+        <match pattern="Tongfang" />
+        <match pattern="Medion" />
+        <match pattern="Panasonic" />
+        <match pattern="Trigem" />
+    </include>
+</patterns>

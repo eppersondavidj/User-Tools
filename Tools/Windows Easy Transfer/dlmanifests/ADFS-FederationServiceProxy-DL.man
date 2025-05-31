@@ -1,0 +1,71 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors=""
+    buildFilter=""
+    company="Microsoft Corporation"
+    copyright=""
+    description="$(resourceString.description)"
+    displayName="$(resourceString.displayName)"
+    manifestVersion="1.0"
+    owners=""
+    supportInformation=""
+    testers=""
+    >
+  <assemblyIdentity
+      buildType="release"
+      language="neutral"
+      name="Microsoft-Windows-ADFS-FederationServiceProxy-DL"
+      processorArchitecture="*"
+      publicKeyToken=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration scope="Upgrade,MigWiz">
+    <migrationDisplayID>Active_Directory_Federation_Services</migrationDisplayID>
+    <!--Declare for which Longhorn equivalent OC this manifest corresponds too-->
+    <registerSDF name="ADFS-FederationServiceProxy"/>
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <!--Check if the source version is Server 2003-->
+          <condition>MigXmlHelper.DoesOSMatch("NT", "5.2.*")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\OC Manager\Subcomponents [adfsproxyserver]", "0x00000001")</condition>
+        </detect>
+      </detects>
+      <plugin
+          classId="{c9a3cb6e-4986-4280-b739-84aae00f1a24}"
+          file="Microsoft-Windows-ADFS-DL\adfsmig.dll"
+          />
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="File">%SystemDrive%\ADFS\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+  </migration>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string
+            buildFilter=""
+            id="displayName"
+            value="Active Directory Federation Service Proxy"
+            />
+      </stringTable>
+      <stringTable>
+        <string
+            buildFilter=""
+            id="description"
+            value="Installs Active Directory Federation Service Proxy"
+            />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

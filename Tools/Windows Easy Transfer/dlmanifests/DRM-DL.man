@@ -1,0 +1,48 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="kalyv"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2004-08-17T23:03:03.5587176-07:00"
+    description="Downlevel manifest for Microsoft Windows Media DRM"
+    displayName="Downlevel manifest for Microsoft Windows Media DRM"
+    lastUpdateTimeStamp="2004-10-01T23:43:14.6879141-07:00"
+    manifestVersion="1.0"
+    owners="kalyv"
+    supportInformation=""
+    testers=""
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="release"
+      language="neutral"
+      name="Microsoft-Windows-MediaPlayer-DRM-DL"
+      processorArchitecture="*"
+      publicKeyToken=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration xmlns="">
+    <machineSpecific>
+      <migXml>
+        <detects>
+          <detect>
+            <!-- Check as this is only valid for down-level OS < than Windows Vista -->
+            <condition>MigXmlHelper.IsOSEarlierThan("NT","6.0")</condition>
+          </detect>
+          <detect>
+            <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry","HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\WindowsFeatures [Windows Media Player]","0x00000000")</condition>
+          </detect>
+        </detects>
+        <plugin
+            classId="{743B7FD2-8427-4b7d-B330-A95618DE2BFC}"
+            file="Microsoft-Windows-MediaPlayer-DRM-DL\drmmgrtn.dll"
+            />
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>

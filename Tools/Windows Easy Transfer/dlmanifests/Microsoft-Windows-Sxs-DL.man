@@ -1,0 +1,38 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="sxsdev"
+    buildFilter=""
+    company="Microsoft"
+    copyright="2002 Microsoft Corporation"
+    creationTimeStamp="2003-05-20T13:07:45.7188321-07:00"
+    description="Downlevel manifest for Sxs"
+    displayName="Downlevel manifest for Sxs"
+    lastUpdateTimeStamp="2004-01-13T09:32:09.7873335+00:00"
+    manifestVersion="1.0"
+    owners="sxsdev"
+    supportInformation="http://support.microsoft.com"
+    testers="sxstest"
+    >
+  <assemblyIdentity
+      language="*"
+      name="Microsoft-Windows-Sxs-DL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration>
+    <migXml xmlns="">
+      <plugin
+          classId="{d2caca93-9eef-4c24-9790-61cdefd255d4}"
+          file="Microsoft-Windows-Sxs\SxsMigPlugin.dll"
+          />
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0.0")</condition>
+        </detect>
+      </detects>
+    </migXml>
+  </migration>
+</assembly>

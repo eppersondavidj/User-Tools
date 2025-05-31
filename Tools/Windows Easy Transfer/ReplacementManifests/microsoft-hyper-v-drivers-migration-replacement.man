@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly>
+  <assemblyIdentity name="Microsoft-Hyper-V-Drivers"
+                    version="0.0.0.0"
+                    processorArchitecture="*"
+                    language="*"/>
+  <migration
+      scope="Upgrade"
+      settingsVersion="0"
+      replacementSettingsVersionRange="0"
+      replacementVersionRange="6.0-6.1"
+      alwaysProcess="yes"
+      >
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("File", "%systemroot%\system32 [vmms.exe]")</condition>
+        </detect>
+      </detects>
+      <plugin
+        classId="{12FF03A1-5339-4bd6-B557-9227E0675910}"
+        file="Microsoft-Hyper-V\VmSwitchMigrationPlugin.dll"
+          />
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\system\currentcontrolset\services\vmsmp\parameters\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

@@ -1,0 +1,38 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      buildType="$(build.buildType)"
+      language="neutral"
+      name="Microsoft-Windows-Audio-MMECore-Other"
+      processorArchitecture="*"
+      publicKeyToken=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration
+      replacementVersionRange="6.0.*" 
+      replacementSettingsVersionRange="0"
+      settingsVersion="0"
+      alwaysProcess="yes"
+      >
+    <machineSpecific>
+      <migXml xmlns="">
+        <detects>
+            <detect>
+                <condition>MigXmlHelper.DoesOSMatch("NT", "6.0.*")</condition>
+            </detect>
+        </detects>
+        <plugin
+            classId="{4D36E96C-E325-11CE-BFC1-08002BE10318}"
+            file="Microsoft-Windows-Audio-MMECore-Other\audmigplugin.dll"
+            />
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>
+
